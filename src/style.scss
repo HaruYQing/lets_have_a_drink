@@ -1,0 +1,152 @@
+@font-face {
+    font-family: "NakaiFont";
+    src:
+      local("NaikaiFont-Regular"),
+      url("./font/NaikaiFont-Regular.ttf") format("truetype");
+  }
+
+.font-special {
+font-family: "NakaiFont";
+}
+
+$colors: (
+  "primary": #dba979,
+  "primary-light": #ecca9c,
+  "secondary": #afd198,
+  "secondary-light": #e8efcf,
+  "red": #f06f5f,
+  "gray": #9e9e9e,
+  "white": #fff,
+  "black": #333,
+);
+
+.bg-glass {
+    background-color: rgba(rgb(46, 46, 46), 0.1); /* 使用rgba來設置透明度 */
+    backdrop-filter: blur(100px); /* 毛玻璃效果 */
+    -webkit-backdrop-filter: blur(5px); /* 兼容Safari瀏覽器 */
+  }
+
+@each $name, $color in $colors {
+    .c-#{$name} {
+      color: $color !important;
+    }
+  
+    .bg-#{$name} {
+      background-color: $color !important;
+    }
+  
+    .hover-c-#{$name} {
+      &:hover {
+        color: $color !important;
+      }
+    }
+  
+    .hover-bg-#{$name} {
+      &:hover {
+        background-color: $color !important;
+      }
+    }
+  }
+
+  $layouts: (
+  "center": (
+    display: flex,
+    justify-content: center,
+    align-items: center,
+  ),
+  "start": (
+    display: flex,
+    justify-content: flex-start,
+    align-items: center,
+  ),
+  "end": (
+    display: flex,
+    justify-content: flex-end,
+    align-items: center,
+  ),
+);
+
+@each $name, $props in $layouts {
+  .f-#{$name} {
+    @each $property, $value in $props {
+      #{$property}: $value;
+    }
+  }
+}
+// 以下是flex設定，在className輸入flex-任何
+@mixin flex($value) {
+  flex: $value;
+}
+
+@for $i from 1 through 10 {
+  .flex-#{$i} {
+    @include flex($i);
+  }
+}
+// 以上是flex設定
+
+.f-end-end {
+  display: flex;
+  align-content: end;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.f-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.f-col-around {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.f-space-around {
+  display: flex;
+  justify-content: space-around;
+}
+
+.f-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.w-fit {
+  width: fit-content;
+}
+.fs-larger {
+  font-size: 4rem !important;
+  font-weight: normal !important;
+}
+.fs-medium {
+  font-size: 2rem !important;
+  font-weight: normal !important;
+}
+.fw-bold {
+  font-weight: bold;
+}
+.fw-500 {
+  font-weight: 500;
+}
+
+// 以下是font-weight設定，在className輸入fw-任何
+@mixin fw($value) {
+  font-weight: $value;
+}
+
+@for $i from 1 through 1000 {
+  .fw-#{$i} {
+    @include fw($i);
+  }
+}
