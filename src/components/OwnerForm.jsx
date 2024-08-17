@@ -20,7 +20,7 @@ const OwnerForm = () => {
             type="button"
             variant="light"
             size="lg"
-            onClick={() => navigate("/")}
+            onClick={() => navigate(-1)}
           >
             <i className="bi bi-house fs-medium"></i>
           </Button>
