@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/createEvent", async (req, res) => {
-  console.log("Received data:", req.body);
+  // console.log("Received data:", req.body);
 
   try {
     const { user_name, email, deadline, remark, menu } = req.body;
@@ -37,7 +37,9 @@ app.post("/createEvent", async (req, res) => {
       console.log("No valid image data received");
     }
 
-    console.log(saveFields["menu"]);
+    // console.log(saveFields["menu"]);
+
+    let eid;
 
     const saveNewEventData = async function (pool, eventData) {
       const connection = await pool.getConnection();
@@ -58,6 +60,9 @@ app.post("/createEvent", async (req, res) => {
 
         const [result] = await connection.query(sql, values);
 
+        // 抓出 INSER 新資料列的 eid
+        eid = result.insertId;
+
         await connection.commit();
 
         return {
@@ -76,9 +81,12 @@ app.post("/createEvent", async (req, res) => {
 
     if (Object.keys(saveFields).length > 0) {
       await saveNewEventData(pool, saveFields);
+
+      // 回傳給客戶端的資料
       res.status(200).json({
         message: "恭喜恭喜",
         saveFields: Object.keys(saveFields),
+        eid: eid, // 回傳 eid 供後續明細查詢用
       });
     }
   } catch (error) {

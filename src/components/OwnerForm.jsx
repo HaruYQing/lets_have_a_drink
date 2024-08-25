@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-const OwnerForm = () => {
+const OwnerForm = (props) => {
+  const { handleEid } = props;
+
   const [inputData, setInputData] = useState({
     user_name: "",
     email: "",
@@ -128,11 +130,15 @@ const OwnerForm = () => {
       console.log("response資訊如下:", response);
 
       if (response.status === 200) {
+        const eid = response.data.eid;
         console.log("揪團資料已成功儲存:", response.data.message);
-        console.log("已儲存的揪團資料:", response.data.saveFields);
+        console.log("eid: ", eid);
 
         alert("揪團活動建立成功!");
-        // navigate("/");
+
+        // 把 eid 傳遞給父層
+        handleEid(eid);
+        navigate("/details");
       } else {
         console.log("Unexpected response status:", response.status);
       }
