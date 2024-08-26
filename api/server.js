@@ -98,6 +98,34 @@ app.post("/createEvent", async (req, res) => {
   }
 });
 
+app.get("/showEvent/:eid", async (req, res) => {
+  const connection = await pool.getConnection();
+  try {
+    const sql = `
+    SELECT * FROM events WHERE eid = ?
+    `;
+    // 目前先寫死，記得 1 之後要改 eid
+    const [result] = await connection.query(sql, req.params.eid);
+
+    if (result.length > 0) {
+      res.status(200).json({
+        message: "成功獲取Event資料",
+        eventDetail: result[0],
+      });
+    } else {
+      res.status(404).send({ message: "找不到對應的Event資料" });
+    }
+  } catch (error) {
+    console.error("GET錯誤訊息: ", error.message);
+    res.status(500).send({
+      message: "獲取Event資料時發生錯誤",
+      error: error.message,
+    });
+  } finally {
+    connection.release();
+  }
+});
+
 const PORT = 8000;
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
