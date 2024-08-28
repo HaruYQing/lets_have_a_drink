@@ -104,12 +104,11 @@ app.get("/showEvent/:eid", async (req, res) => {
     const sql = `
     SELECT * FROM events WHERE eid = ?
     `;
-    // 目前先寫死，記得 1 之後要改 eid
+
     const [result] = await connection.query(sql, req.params.eid);
 
     if (result.length > 0) {
       res.status(200).json({
-        message: "成功獲取Event資料",
         eventDetail: result[0],
       });
     } else {

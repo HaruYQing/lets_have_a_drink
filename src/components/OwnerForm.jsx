@@ -138,7 +138,9 @@ const OwnerForm = (props) => {
 
         // 把 eid 傳遞給父層
         handleEid(eid);
-        navigate("/details");
+        setTimeout(() => {
+          navigate("/details");
+        }, 1000);
       } else {
         console.log("Unexpected response status:", response.status);
       }
