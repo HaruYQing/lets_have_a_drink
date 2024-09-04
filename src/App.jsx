@@ -29,7 +29,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="arrange" element={<OwnerForm handleEid={handleEid} />} />
           <Route path="details" element={<EventDetailFetcher eid={eid} />} />
-          <Route path="invite/:eid" element={<ClientForm />} />
+          <Route path="invite/:eid" element={<ClientFromDetail eid={eid} />} />
         </Routes>
         <Outlet />
       </BrowserRouter>
@@ -57,6 +57,28 @@ function EventDetailFetcher({ eid }) {
   if (error) return <p>Error: {error.message}</p>;
 
   return <EventDetail eid={eid} eventDetail={eventDetail} />;
+}
+
+function ClientFromDetail({ eid }) {
+  const {
+    data: eventDetail,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["eventDetail", eid],
+    queryFn: async () => {
+      const response = await axios.get(
+        `http://localhost:8000/showEvent/${eid}`
+      );
+      return response.data;
+    },
+    enabled: !!eid,
+  });
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  return <ClientForm eid={eid} eventDetail={eventDetail} />;
 }
 
 export default App;

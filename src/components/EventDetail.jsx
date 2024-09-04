@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
 import moment from "moment";
 import "moment/locale/zh-tw";
@@ -65,8 +67,13 @@ const EventDetail = (props) => {
     <Container>
       {eventDetail ? (
         <>
-          <div>
-            <h1>感謝您使用【揪愛喝手搖】，以下是您的揪團資訊：</h1>
+          <div
+            className="mt-5"
+            style={{ backgroundColor: "lightseagreen", borderRadius: "10px" }}
+          >
+            <h1 className="px-4 py-2" style={{ color: "white" }}>
+              感謝您使用【揪愛喝手搖】，以下是您的揪團資訊：
+            </h1>
           </div>
           <div className="py-2 px-5">
             <p>團主名稱：{eventDetail.user_name}</p>
@@ -78,7 +85,11 @@ const EventDetail = (props) => {
             )}
             <br />
             <br />
-            <p>截止時間過後，揪團結果明細將寄送至：{eventDetail.email}</p>
+            <p>
+              <b style={{ fontSize: "2rem" }}>
+                截止時間過後，揪團結果明細將寄送至：{eventDetail.email}
+              </b>
+            </p>
           </div>
         </>
       ) : (
@@ -87,17 +98,23 @@ const EventDetail = (props) => {
       <br />
       <br />
       <div>
-        <h2>將以下連結傳送給大家就可以開始點餐囉!</h2>
-        <InputGroup className="mb-3">
-          <Form.Control type="text" value={inviteLink} readOnly />
-          <Button
-            id="copy-button"
-            data-clipboard-text={inviteLink}
-            variant="outline-secondary"
-          >
-            複製網址
-          </Button>
-        </InputGroup>
+        <div style={{ backgroundColor: "lightseagreen", borderRadius: "10px" }}>
+          <h2 className="px-4 py-2" style={{ color: "white" }}>
+            將以下連結傳送給大家就可以開始點餐囉!
+          </h2>
+        </div>
+        <Row>
+          <InputGroup as={Col} className="my-3 mx-5">
+            <Form.Control type="text" value={inviteLink} readOnly />
+            <Button
+              id="copy-button"
+              data-clipboard-text={inviteLink}
+              variant="outline-secondary"
+            >
+              複製網址
+            </Button>
+          </InputGroup>
+        </Row>
         {copySuccess && (
           <div class="alert alert-info" role="alert">
             {copySuccess}

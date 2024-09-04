@@ -182,7 +182,7 @@ const OwnerForm = (props) => {
           <Form.Control
             name="user_name"
             type="text"
-            placeholder="請輸入您的稱呼"
+            placeholder="請輸入10字以內稱呼"
             maxLength={10}
             value={inputData.name}
             onChange={handleInputChange}
